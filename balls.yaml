@@ -105,15 +105,6 @@ action:
             target:
               entity_id: !input light
 
-      # Long-Press on the power button.
-      - conditions:
-          - condition: template
-            value_template: '{{ trigger.event.data.command == "move_to_level_with_on_off" }}'
-        sequence:
-          - service: light.toggle
-            target:
-              entity_id: !input liight
-
       # Short-Press on the dim-up button.
       - conditions:
           - condition: template
@@ -160,17 +151,9 @@ action:
           - condition: template
             value_template: '{{ trigger.event.data.command == "move" }}'
         sequence:
-          - repeat:
-              while: []
-              sequence:
-                - service: light.turn_on
-                  target:
-                    entity_id: !input light
-                  data:
-                    brightness_step_pct: -10
-                    transition: "{{ (var_speed / 1000)|float }}"
-                - delay:
-                    milliseconds: !input speed
+          - service: light.toggle
+            target:
+              entity_id: !input liight
 
       # Short-Press on the color-up button.
       - conditions:
